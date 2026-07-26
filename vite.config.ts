@@ -1,4 +1,4 @@
-import { defineConfig } from 'vitest/config'
+import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
 // GitHub Pages serves project sites under /<repo>/. Deriving it from the CI env
@@ -8,5 +8,4 @@ const repo = process.env.GITHUB_REPOSITORY?.split('/')[1]
 export default defineConfig({
   plugins: [react()],
   base: repo ? `/${repo}/` : '/',
-  test: { environment: 'jsdom' },
 })

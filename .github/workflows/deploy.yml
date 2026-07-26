@@ -24,8 +24,7 @@ jobs:
       - uses: actions/checkout@v7
       - uses: oven-sh/setup-bun@v2
       - run: bun install --frozen-lockfile
-      - run: bun run lint
-      - run: bun run test
+      - run: bun run validate
       - run: bun run build
       # Pages has no SPA rewrite; a copy of index.html as 404.html serves deep links.
       - run: cp dist/index.html dist/404.html
