@@ -1,14 +1,26 @@
 import { useRef, useState } from 'react'
 import { narrative } from './narrative'
-import { byName, photos } from './photos'
+import { byName, photos, type Photo } from './photos'
 
 export default function App() {
-  // ponytail: a term may name several photos; we render the first. Upgrade path is a
-  // carousel over `photos`, which needs no change to narrative.ts.
-  const [selected, setSelected] = useState({ name: photos[0].name, label: '' })
-  const photo = byName[selected.name]
+  const [selected, setSelected] = useState({
+    photos: [photos[0].name],
+    label: '',
+  })
   const lightbox = useRef<HTMLDialogElement>(null)
-  const alt = selected.label || photo?.caption || 'Photo from the France trip'
+  const strip = useRef<HTMLDivElement>(null)
+
+  const shown = selected.photos.map((name) => byName[name]).filter(Boolean)
+  const alt = (photo: Photo) =>
+    selected.label || photo.caption || 'Photo from the France trip'
+
+  // showModal() lays the dialog out synchronously, so the strip can be scrolled
+  // to the clicked photo before the first paint.
+  const open = (index: number) => {
+    lightbox.current?.showModal()
+    if (strip.current)
+      strip.current.scrollLeft = strip.current.clientWidth * index
+  }
 
   return (
     <div className="app">
@@ -25,7 +37,7 @@ export default function App() {
                   className="term"
                   onClick={() =>
                     setSelected({
-                      name: segment.photos[0],
+                      photos: segment.photos,
                       label: segment.text,
                     })
                   }
@@ -38,16 +50,17 @@ export default function App() {
         ))}
       </article>
 
-      <figure>
-        {photo && (
+      <figure className="strip">
+        {shown.map((photo, i) => (
           <button
+            key={photo.name}
             type="button"
             className="zoom"
-            onClick={() => lightbox.current?.showModal()}
+            onClick={() => open(i)}
           >
-            <img src={photo.url} alt={alt} />
+            <img src={photo.url} alt={alt(photo)} />
           </button>
-        )}
+        ))}
       </figure>
 
       {/* ponytail: <dialog> gives Esc-to-close, focus trap and ::backdrop for free. */}
@@ -56,7 +69,11 @@ export default function App() {
         className="lightbox"
         onClick={(e) => e.currentTarget.close()}
       >
-        {photo && <img src={photo.url} alt={alt} />}
+        <div className="strip" ref={strip}>
+          {shown.map((photo) => (
+            <img key={photo.name} src={photo.url} alt={alt(photo)} />
+          ))}
+        </div>
       </dialog>
     </div>
   )
