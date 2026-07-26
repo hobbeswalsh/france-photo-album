@@ -1,6 +1,39 @@
-import { useRef, useState } from 'react'
+import { type MouseEvent, type RefObject, useRef, useState } from 'react'
 import { narrative } from './narrative'
 import { byName, type Photo } from './photos'
+
+// Paging is one slide width of scroll — the strips already snap, so there is no
+// index to track. Works for both the pane and the lightbox.
+function Arrows({ strip }: { strip: RefObject<HTMLElement | null> }) {
+  const page = (dir: number) => (e: MouseEvent) => {
+    e.stopPropagation() // a click anywhere in the lightbox closes it
+    strip.current?.scrollBy({
+      left: dir * strip.current.clientWidth,
+      behavior: 'smooth',
+    })
+  }
+
+  return (
+    <>
+      <button
+        type="button"
+        className="page prev"
+        aria-label="Previous photo"
+        onClick={page(-1)}
+      >
+        ‹
+      </button>
+      <button
+        type="button"
+        className="page next"
+        aria-label="Next photo"
+        onClick={page(1)}
+      >
+        ›
+      </button>
+    </>
+  )
+}
 
 export default function App() {
   const [selected, setSelected] = useState<{ photos: string[]; label: string }>(
@@ -10,7 +43,8 @@ export default function App() {
     },
   )
   const lightbox = useRef<HTMLDialogElement>(null)
-  const strip = useRef<HTMLDivElement>(null)
+  const pane = useRef<HTMLDivElement>(null)
+  const zoomed = useRef<HTMLDivElement>(null)
 
   const shown = selected.photos.map((name) => byName[name]).filter(Boolean)
   const alt = (photo: Photo) =>
@@ -20,8 +54,8 @@ export default function App() {
   // to the clicked photo before the first paint.
   const open = (index: number) => {
     lightbox.current?.showModal()
-    if (strip.current)
-      strip.current.scrollLeft = strip.current.clientWidth * index
+    if (zoomed.current)
+      zoomed.current.scrollLeft = zoomed.current.clientWidth * index
   }
 
   return (
@@ -52,18 +86,26 @@ export default function App() {
         ))}
       </article>
 
-      <figure className={shown.length ? 'strip' : 'splash'}>
-        {shown.length === 0 && <p>Bonjour and bienvenue!</p>}
-        {shown.map((photo, i) => (
-          <button
-            key={photo.name}
-            type="button"
-            className="zoom"
-            onClick={() => open(i)}
-          >
-            <img src={photo.url} alt={alt(photo)} />
-          </button>
-        ))}
+      {/* The strip is its own element so the arrows can sit outside the
+          scroller and stay put while it scrolls. */}
+      <figure className={shown.length ? 'pane' : 'splash'}>
+        {shown.length ? (
+          <div className="strip" ref={pane}>
+            {shown.map((photo, i) => (
+              <button
+                key={photo.name}
+                type="button"
+                className="zoom"
+                onClick={() => open(i)}
+              >
+                <img src={photo.url} alt={alt(photo)} />
+              </button>
+            ))}
+          </div>
+        ) : (
+          <p>Bonjour and bienvenue!</p>
+        )}
+        {shown.length > 1 && <Arrows strip={pane} />}
       </figure>
 
       {/* ponytail: <dialog> gives Esc-to-close, focus trap and ::backdrop for free. */}
@@ -72,11 +114,12 @@ export default function App() {
         className="lightbox"
         onClick={(e) => e.currentTarget.close()}
       >
-        <div className="strip" ref={strip}>
+        <div className="strip" ref={zoomed}>
           {shown.map((photo) => (
             <img key={photo.name} src={photo.url} alt={alt(photo)} />
           ))}
         </div>
+        {shown.length > 1 && <Arrows strip={zoomed} />}
       </dialog>
     </div>
   )
