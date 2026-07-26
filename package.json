@@ -7,8 +7,8 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
-    "fix": "oxlint --fix && prettier --write .",
-    "validate": "oxlint && prettier --check ."
+    "fix": "oxlint --fix && oxfmt",
+    "validate": "oxlint && oxfmt --check"
   },
   "dependencies": {
     "react": "^19.2.7",
@@ -19,8 +19,8 @@
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.3",
+    "oxfmt": "^0.60.0",
     "oxlint": "^1.71.0",
-    "prettier": "^3.9.6",
     "typescript": "~6.0.2",
     "vite": "^8.1.1"
   }
