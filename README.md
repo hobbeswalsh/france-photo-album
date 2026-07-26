@@ -5,13 +5,13 @@ React + TypeScript SPA built with Vite, deployed to GitHub Pages.
 ```sh
 bun install
 bun dev           # dev server
-bun run fix       # oxlint --fix + prettier --write
-bun run validate  # oxlint + prettier --check (what CI runs)
+bun run fix       # oxlint --fix + oxfmt
+bun run validate  # oxlint + oxfmt --check (what CI runs)
 bun run build
 ```
 
 No test suite — per `CLAUDE.md` this repo enforces linting and formatting only.
-Prettier owns formatting; `.editorconfig` keeps editors from fighting it.
+oxfmt owns JS/TS formatting; `.editorconfig` keeps editors from fighting it.
 
 ## Photos
 
