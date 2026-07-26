@@ -78,6 +78,14 @@ figure {
   object-fit: contain;
 }
 
+.splash {
+  height: 100%;
+  display: grid;
+  place-content: center;
+  color: #f5f5f5;
+  font-size: clamp(1.5rem, 5vw, 3rem);
+}
+
 /* A button, not a bare img, so the lightbox opens from the keyboard too. */
 .zoom {
   padding: 0;
