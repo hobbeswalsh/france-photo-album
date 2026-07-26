@@ -21,7 +21,12 @@ export default function App() {
                   key={s}
                   type="button"
                   className="term"
-                  onClick={() => setSelected({ name: segment.photos[0], label: segment.text })}
+                  onClick={() =>
+                    setSelected({
+                      name: segment.photos[0],
+                      label: segment.text,
+                    })
+                  }
                 >
                   {segment.text}
                 </button>
@@ -35,7 +40,9 @@ export default function App() {
         {photo && (
           <img
             src={photo.url}
-            alt={selected.label || photo.caption || 'Photo from the France trip'}
+            alt={
+              selected.label || photo.caption || 'Photo from the France trip'
+            }
           />
         )}
       </figure>
