@@ -18,3 +18,7 @@ export const photos: Photo[] = Object.entries(urls)
     const name = path.slice(path.lastIndexOf('/') + 1)
     return { name, url, caption: captions[name] ?? '' }
   })
+
+export const byName: Record<string, Photo> = Object.fromEntries(
+  photos.map((p) => [p.name, p]),
+)
