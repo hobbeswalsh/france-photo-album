@@ -1,12 +1,14 @@
 import { useRef, useState } from 'react'
 import { narrative } from './narrative'
-import { byName, photos, type Photo } from './photos'
+import { byName, type Photo } from './photos'
 
 export default function App() {
-  const [selected, setSelected] = useState({
-    photos: [photos[0].name],
-    label: '',
-  })
+  const [selected, setSelected] = useState<{ photos: string[]; label: string }>(
+    {
+      photos: [],
+      label: '',
+    },
+  )
   const lightbox = useRef<HTMLDialogElement>(null)
   const strip = useRef<HTMLDivElement>(null)
 
@@ -50,7 +52,8 @@ export default function App() {
         ))}
       </article>
 
-      <figure className="strip">
+      <figure className={shown.length ? 'strip' : 'splash'}>
+        {shown.length === 0 && <p>Bonjour and bienvenue!</p>}
         {shown.map((photo, i) => (
           <button
             key={photo.name}
