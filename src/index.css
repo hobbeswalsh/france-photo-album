@@ -58,9 +58,36 @@ figure {
 
 /* Filling the pane and letting object-fit letterbox is what keeps photos from
    cropping — a centered grid item sizes the track to the image and overflows. */
-figure img {
+figure img,
+.lightbox img {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: contain;
+}
+
+/* A button, not a bare img, so the lightbox opens from the keyboard too. */
+.zoom {
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: zoom-in;
+}
+
+.lightbox {
+  width: 100vw;
+  max-width: 100vw;
+  height: 100dvh;
+  max-height: 100dvh;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: zoom-out;
+}
+
+.lightbox::backdrop {
+  background: rgb(0 0 0 / 0.9);
 }
