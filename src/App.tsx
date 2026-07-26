@@ -1,50 +1,43 @@
-import { useEffect, useState } from 'react'
-import { photos } from './photos'
+import { useState } from 'react'
+import { narrative } from './narrative'
+import { byName, photos } from './photos'
 
 export default function App() {
-  const [index, setIndex] = useState(0)
-  const photo = photos[index]
-
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'ArrowLeft') setIndex((i) => (i - 1 + photos.length) % photos.length)
-      if (e.key === 'ArrowRight') setIndex((i) => (i + 1) % photos.length)
-    }
-    window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
-  }, [])
+  // ponytail: a term may name several photos; we render the first. Upgrade path is a
+  // carousel over `photos`, which needs no change to narrative.ts.
+  const [selected, setSelected] = useState({ name: photos[0].name, label: '' })
+  const photo = byName[selected.name]
 
   return (
     <div className="app">
-      <header>
-        <h1>France Album</h1>
-        <p>
-          {photo.caption ||
-            'Add captions in src/photos.ts, keyed by filename. This panel scrolls on its own when the text runs long.'}
-        </p>
-      </header>
+      <article>
+        {narrative.map((paragraph, p) => (
+          <p key={p}>
+            {paragraph.map((segment, s) =>
+              typeof segment === 'string' ? (
+                segment
+              ) : (
+                <button
+                  key={s}
+                  type="button"
+                  className="term"
+                  onClick={() => setSelected({ name: segment.photos[0], label: segment.text })}
+                >
+                  {segment.text}
+                </button>
+              ),
+            )}
+          </p>
+        ))}
+      </article>
 
       <figure>
-        <img src={photo.url} alt={photo.caption || `Photo ${index + 1} from the France trip`} />
-        <button
-          type="button"
-          className="nav prev"
-          aria-label="Previous photo"
-          onClick={() => setIndex((i) => (i - 1 + photos.length) % photos.length)}
-        >
-          ‹
-        </button>
-        <button
-          type="button"
-          className="nav next"
-          aria-label="Next photo"
-          onClick={() => setIndex((i) => (i + 1) % photos.length)}
-        >
-          ›
-        </button>
-        <figcaption>
-          {index + 1} / {photos.length}
-        </figcaption>
+        {photo && (
+          <img
+            src={photo.url}
+            alt={selected.label || photo.caption || 'Photo from the France trip'}
+          />
+        )}
       </figure>
     </div>
   )
