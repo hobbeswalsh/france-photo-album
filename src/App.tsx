@@ -9,9 +9,12 @@ import { narrative } from './narrative'
 import { byName, type Photo } from './photos'
 
 // Paging is one slide width of scroll — the strips already snap, so there is no
-// index to track. Works for both the pane and the lightbox. Only the scroll
-// position decides which arrow shows, so `count` is enough to re-measure on a
-// new selection: every slide is exactly one strip wide.
+// index to track. Works for both the pane and the lightbox.
+const page = (el: HTMLElement | null, dir: number) =>
+  el?.scrollBy({ left: dir * el.clientWidth, behavior: 'smooth' })
+
+// Only the scroll position decides which arrow shows, so `count` is enough to
+// re-measure on a new selection: every slide is exactly one strip wide.
 function Arrows({
   strip,
   count,
@@ -42,12 +45,9 @@ function Arrows({
     }
   }, [strip, count])
 
-  const page = (dir: number) => (e: MouseEvent) => {
+  const click = (dir: number) => (e: MouseEvent) => {
     e.stopPropagation() // a click anywhere in the lightbox closes it
-    strip.current?.scrollBy({
-      left: dir * strip.current.clientWidth,
-      behavior: 'smooth',
-    })
+    page(strip.current, dir)
   }
 
   return (
@@ -57,7 +57,7 @@ function Arrows({
           type="button"
           className="page prev"
           aria-label="Previous photo"
-          onClick={page(-1)}
+          onClick={click(-1)}
         >
           ‹
         </button>
@@ -67,7 +67,7 @@ function Arrows({
           type="button"
           className="page next"
           aria-label="Next photo"
-          onClick={page(1)}
+          onClick={click(1)}
         >
           ›
         </button>
@@ -90,6 +90,18 @@ export default function App() {
   const shown = selected.photos.map((name) => byName[name]).filter(Boolean)
   const alt = (photo: Photo) =>
     selected.label || photo.caption || 'Photo from the France trip'
+
+  // Arrow keys page whichever strip is on screen, from anywhere on the page.
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      const dir = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0
+      if (!dir) return
+      e.preventDefault() // otherwise the arrows also scroll the page sideways
+      page(lightbox.current?.open ? zoomed.current : pane.current, dir)
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [])
 
   // showModal() lays the dialog out synchronously, so the strip can be scrolled
   // to the clicked photo before the first paint.
