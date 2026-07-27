@@ -15,6 +15,10 @@ body {
 .app {
   height: 100dvh;
   display: grid;
+  /* A stack's slides are photo-wide, which makes the strip's max-content width
+     the width of the whole stack -- an auto column would grow to it and the strip
+     would never overflow, so it would never scroll. Pin the column. */
+  grid-template-columns: 100%;
   grid-template-rows: 20% 80%;
 }
 
@@ -82,15 +86,32 @@ figure {
   }
 }
 
-/* `nudge` marks a stack, and a stack's slides are narrower than the pane. Photos
-   are letterboxed to fit, so a pane-wide slide is mostly dead space: a portrait
-   photo leaves ~500px of it either side, which parks the next photo ~800px away
-   and makes a stack look exactly like a single photo. At 75% the next one is
-   already showing, and the nudge above is what draws the eye to it. A percentage
-   keeps every slide the same width before the photos have even loaded. */
+/* `nudge` marks a stack, and a stack's slides are only as wide as their photo.
+   Any slide wider than that centres the photo in a box with dead space either
+   side -- two of those gutters between neighbours is what kept the next photo out
+   of view, and the gap only grows with the window. Hugging the photo puts the
+   next one right at its edge, at any window size, and the nudge draws the eye to
+   it. Paging is by slide, so widths may differ (see page() in App.tsx). */
 .nudge > * {
-  flex-basis: 75%;
+  flex: 0 0 auto;
+  scroll-snap-align: start;
   animation: peek 0.9s ease-in-out 0.1s 1;
+}
+
+.nudge {
+  gap: 3px;
+}
+
+/* Height-first, so the width follows the photo's shape and the slide hugs it. A
+   percentage max-width would have to resolve against that same width to mean
+   anything, hence the viewport. It only bites on a narrow screen, where a
+   landscape photo would otherwise be wider than the screen it is scrolling in.
+   `contain` is what letterboxes it rather than stretching it when it does. */
+.nudge .zoom img {
+  height: 100%;
+  width: auto;
+  max-width: 88vw;
+  object-fit: contain;
 }
 
 @media (prefers-reduced-motion: reduce) {
