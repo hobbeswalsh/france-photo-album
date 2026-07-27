@@ -73,17 +73,23 @@ figure {
   position: relative;
 }
 
-/* A stack of photos looks exactly like a single one until something moves, so
-   shove the slides sideways on arrival: the next photo peeks in from the
-   right -- the way you scroll -- and settles back. Transforms leave scroll
-   position and the snap points alone. */
+/* On arrival the slides shove sideways and settle back, towards the next photo
+   -- the way you scroll. Transforms leave scroll position and the snap points
+   alone. */
 @keyframes peek {
   50% {
     translate: -7% 0;
   }
 }
 
+/* `nudge` marks a stack, and a stack's slides are narrower than the pane. Photos
+   are letterboxed to fit, so a pane-wide slide is mostly dead space: a portrait
+   photo leaves ~500px of it either side, which parks the next photo ~800px away
+   and makes a stack look exactly like a single photo. At 75% the next one is
+   already showing, and the nudge above is what draws the eye to it. A percentage
+   keeps every slide the same width before the photos have even loaded. */
 .nudge > * {
+  flex-basis: 75%;
   animation: peek 0.9s ease-in-out 0.1s 1;
 }
 
