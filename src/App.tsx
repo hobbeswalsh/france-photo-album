@@ -117,10 +117,16 @@ export default function App() {
           scroller and stay put while it scrolls. */}
       <figure className={shown.length ? 'pane' : 'splash'}>
         {shown.length ? (
-          <div className="strip" ref={pane}>
+          <div
+            className={shown.length > 1 ? 'strip nudge' : 'strip'}
+            ref={pane}
+          >
             {shown.map((photo, i) => (
+              // The label is in the key so a new selection always mounts fresh
+              // slides -- that is what replays the peek, even for a photo the
+              // last selection also showed.
               <button
-                key={photo.name}
+                key={selected.label + photo.name}
                 type="button"
                 className="zoom"
                 onClick={() => open(i)}
