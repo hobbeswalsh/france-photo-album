@@ -10,9 +10,14 @@ import { type Selected, SelectPhotos } from './Pic'
 import { byName, type Photo } from './photos'
 
 // Paging is one slide width of scroll — the strips already snap, so there is no
-// index to track. Works for both the pane and the lightbox.
+// index to track. Works for both the pane and the lightbox. A stack's slides are
+// narrower than the pane it scrolls in (see `nudge`), so the width comes from a
+// slide rather than the strip.
 const page = (el: HTMLElement | null, dir: number) =>
-  el?.scrollBy({ left: dir * el.clientWidth, behavior: 'smooth' })
+  el?.scrollBy({
+    left: dir * (el.firstElementChild?.clientWidth ?? el.clientWidth),
+    behavior: 'smooth',
+  })
 
 // Only the scroll position decides which arrow shows, so `count` is enough to
 // re-measure on a new selection: every slide is exactly one strip wide.
