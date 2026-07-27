@@ -82,7 +82,7 @@ figure {
    alone. */
 @keyframes peek {
   50% {
-    translate: -7% 0;
+    translate: -20px 0;
   }
 }
 
@@ -95,11 +95,11 @@ figure {
 .nudge > * {
   flex: 0 0 auto;
   scroll-snap-align: start;
-  animation: peek 0.9s ease-in-out 0.1s 1;
+  animation: peek 0.5s ease-in-out 0.1s 1;
 }
 
 .nudge {
-  gap: 3px;
+  gap: 5px;
 }
 
 /* Height-first, so the width follows the photo's shape and the slide hugs it. A
