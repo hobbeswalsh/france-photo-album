@@ -9,18 +9,26 @@ import { narrative } from './narrative'
 import { type Selected, SelectPhotos } from './Pic'
 import { byName, type Photo } from './photos'
 
-// Paging is one slide width of scroll — the strips already snap, so there is no
-// index to track. Works for both the pane and the lightbox. A stack's slides are
-// narrower than the pane it scrolls in (see `nudge`), so the width comes from a
-// slide rather than the strip.
-const page = (el: HTMLElement | null, dir: number) =>
-  el?.scrollBy({
-    left: dir * (el.firstElementChild?.clientWidth ?? el.clientWidth),
-    behavior: 'smooth',
-  })
+// A stack's slides are each as wide as their own photo, so paging lands on the
+// next slide's edge rather than moving a fixed distance. Those edges are also the
+// snap positions, which is what keeps this in step with a scroll or a swipe —
+// still no index to track. Works for the lightbox too, where slides are uniform.
+const page = (el: HTMLElement | null, dir: number) => {
+  if (!el) return
+  const left = el.getBoundingClientRect().left
+  const edges = [...el.children].map(
+    (slide) => slide.getBoundingClientRect().left - left + el.scrollLeft,
+  )
+  // The 1px slack keeps a fractional resting offset from matching its own edge.
+  const to =
+    dir > 0
+      ? edges.find((x) => x > el.scrollLeft + 1)
+      : edges.filter((x) => x < el.scrollLeft - 1).pop()
+  if (to !== undefined) el.scrollTo({ left: to, behavior: 'smooth' })
+}
 
 // Only the scroll position decides which arrow shows, so `count` is enough to
-// re-measure on a new selection: every slide is exactly one strip wide.
+// re-measure on a new selection.
 function Arrows({
   strip,
   count,
