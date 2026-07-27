@@ -9,3 +9,11 @@ for f in ~/Desktop/France-Trip/*.jpeg
     printf '%s\0%s\0' $f src/photos/(printf 'france-trip-%02d.webp' $n)
 end | xargs -0 -n 2 -P (sysctl -n hw.ncpu) \
     fish -c 'magick $argv[1] -resize "2000x2000>" -strip -quality 80 -define webp:method=6 $argv[2]'
+
+for f in ~/Desktop/France-Trip/*.mov
+    set -l n (string match -r -- '- (\d+) of \d+\.mov$' $f)[2]
+    ffmpeg -nostdin -i $f -vf "scale='min(1280,iw)':-2" \
+        -c:v libx264 -crf 24 -preset slow -pix_fmt yuv420p \
+        -c:a aac -b:a 96k -movflags +faststart \
+        src/photos/(printf 'france-trip-%02d.mp4' $n)
+end
