@@ -6,6 +6,7 @@ import {
   useState,
 } from 'react'
 import { narrative } from './narrative'
+import { type Selected, SelectPhotos } from './Pic'
 import { byName, type Photo } from './photos'
 
 // Paging is one slide width of scroll — the strips already snap, so there is no
@@ -77,12 +78,7 @@ function Arrows({
 }
 
 export default function App() {
-  const [selected, setSelected] = useState<{ photos: string[]; label: string }>(
-    {
-      photos: [],
-      label: '',
-    },
-  )
+  const [selected, setSelected] = useState<Selected>({ photos: [], label: '' })
   const lightbox = useRef<HTMLDialogElement>(null)
   const pane = useRef<HTMLDivElement>(null)
   const zoomed = useRef<HTMLDivElement>(null)
@@ -114,29 +110,7 @@ export default function App() {
   return (
     <div className="app">
       <article>
-        {narrative.map((paragraph, p) => (
-          <p key={p}>
-            {paragraph.map((segment, s) =>
-              typeof segment === 'string' ? (
-                segment
-              ) : (
-                <button
-                  key={s}
-                  type="button"
-                  className="term"
-                  onClick={() =>
-                    setSelected({
-                      photos: segment.photos,
-                      label: segment.text,
-                    })
-                  }
-                >
-                  {segment.text}
-                </button>
-              ),
-            )}
-          </p>
-        ))}
+        <SelectPhotos value={setSelected}>{narrative}</SelectPhotos>
       </article>
 
       {/* The strip is its own element so the arrows can sit outside the

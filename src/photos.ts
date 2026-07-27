@@ -6,16 +6,17 @@ const urls = import.meta.glob<string>('./photos/*.webp', {
   import: 'default',
 })
 
-// Keys are filenames in src/photos/. Missing entries just render no caption.
+// Keys are photo names. Missing entries just render no caption.
 const captions: Record<string, string> = {}
 
 export type Photo = { name: string; url: string; caption: string }
 
-// Filenames are zero-padded, so a plain sort gives album order.
+// Filenames are zero-padded, so a plain sort gives album order. The name drops
+// the extension: it is what <Pic name="..."> refers to, not a path.
 export const photos: Photo[] = Object.entries(urls)
   .sort(([a], [b]) => a.localeCompare(b))
   .map(([path, url]) => {
-    const name = path.slice(path.lastIndexOf('/') + 1)
+    const name = path.slice(path.lastIndexOf('/') + 1, -'.webp'.length)
     return { name, url, caption: captions[name] ?? '' }
   })
 
