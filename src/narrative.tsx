@@ -16,7 +16,7 @@ export const narrative = (
       <Pic name="france-trip-05">snuggling</Pic>,{' '}
       <Pic name="france-trip-06">journaling</Pic>, and{' '}
       <Pic name="france-trip-08">continental breakfast</Pic>. Oh, and did I
-      mention <Pic name="france-trip-10">sleeping?</Pic>
+      mention <Pic name="france-trip-09">sleeping?</Pic>
     </p>
     <p>
       After breakfast, we drove our trusty{' '}

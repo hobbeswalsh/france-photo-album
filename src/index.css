@@ -74,7 +74,7 @@ figure {
 }
 
 /* A stack of photos looks exactly like a single one until something moves, so
-   shove the slides sideways twice on arrival: the next photo peeks in from the
+   shove the slides sideways on arrival: the next photo peeks in from the
    right -- the way you scroll -- and settles back. Transforms leave scroll
    position and the snap points alone. */
 @keyframes peek {
@@ -84,7 +84,7 @@ figure {
 }
 
 .nudge > * {
-  animation: peek 0.9s ease-in-out 0.35s 2;
+  animation: peek 0.9s ease-in-out 0.1s 1;
 }
 
 @media (prefers-reduced-motion: reduce) {
