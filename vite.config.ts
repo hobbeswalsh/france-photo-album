@@ -1,11 +1,9 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// GitHub Pages serves project sites under /<repo>/. Deriving it from the CI env
-// means a repo rename needs no edit, and local builds stay at '/' for `vite preview`.
-const repo = process.env.GITHUB_REPOSITORY?.split('/')[1]
-
+// The CNAME puts the album at the root of its own domain, so paths are absolute
+// from '/' -- the /<repo>/ prefix a bare github.io project site needs would be a
+// path that does not exist there.
 export default defineConfig({
   plugins: [react()],
-  base: repo ? `/${repo}/` : '/',
 })
