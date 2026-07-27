@@ -149,7 +149,7 @@ export default function App() {
             ))}
           </div>
         ) : (
-          <p>Bonjour and bienvenue!</p>
+          <p>Bonjour et bienvenue! 🥖</p>
         )}
         {shown.length > 1 && <Arrows strip={pane} count={shown.length} />}
       </figure>
