@@ -13,7 +13,11 @@ import { byName, type Photo } from './photos'
 // next slide's edge rather than moving a fixed distance. Those edges are also the
 // snap positions, which is what keeps this in step with a scroll or a swipe —
 // still no index to track. Works for the lightbox too, where slides are uniform.
-const page = (el: HTMLElement | null, dir: number) => {
+const page = (
+  el: HTMLElement | null,
+  dir: number,
+  behavior: ScrollBehavior,
+) => {
   if (!el) return
   const left = el.getBoundingClientRect().left
   const edges = [...el.children].map(
@@ -24,9 +28,10 @@ const page = (el: HTMLElement | null, dir: number) => {
     dir > 0
       ? edges.find((x) => x > el.scrollLeft + 1)
       : edges.filter((x) => x < el.scrollLeft - 1).pop()
-  // Not 'smooth': the browser scales that duration with the distance, so a wide
-  // slide took over half a second to arrive. A photo should land when you ask.
-  if (to !== undefined) el.scrollTo({ left: to, behavior: 'instant' })
+  // Zoomed in, one photo fills the screen and 'instant' cuts straight to the next
+  // one. Zoomed out, several are on screen at once and a cut is hard to follow —
+  // there, seeing them travel is what says which way you went.
+  if (to !== undefined) el.scrollTo({ left: to, behavior })
 }
 
 // Only the scroll position decides which arrow shows, so `count` is enough to
@@ -34,9 +39,11 @@ const page = (el: HTMLElement | null, dir: number) => {
 function Arrows({
   strip,
   count,
+  behavior,
 }: {
   strip: RefObject<HTMLElement | null>
   count: number
+  behavior: ScrollBehavior
 }) {
   const [atStart, setAtStart] = useState(true)
   const [atEnd, setAtEnd] = useState(true)
@@ -63,7 +70,7 @@ function Arrows({
 
   const click = (dir: number) => (e: MouseEvent) => {
     e.stopPropagation() // a click anywhere in the lightbox closes it
-    page(strip.current, dir)
+    page(strip.current, dir, behavior)
   }
 
   return (
@@ -108,7 +115,12 @@ export default function App() {
       const dir = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0
       if (!dir) return
       e.preventDefault() // otherwise the arrows also scroll the page sideways
-      page(lightbox.current?.open ? zoomed.current : pane.current, dir)
+      const zoom = lightbox.current?.open
+      page(
+        zoom ? zoomed.current : pane.current,
+        dir,
+        zoom ? 'instant' : 'smooth',
+      )
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
@@ -153,7 +165,9 @@ export default function App() {
         ) : (
           <p>Bonjour et bienvenue! 🥖</p>
         )}
-        {shown.length > 1 && <Arrows strip={pane} count={shown.length} />}
+        {shown.length > 1 && (
+          <Arrows strip={pane} count={shown.length} behavior="smooth" />
+        )}
       </figure>
 
       {/* ponytail: <dialog> gives Esc-to-close, focus trap and ::backdrop for free. */}
@@ -167,7 +181,9 @@ export default function App() {
             <img key={photo.name} src={photo.url} alt={alt(photo)} />
           ))}
         </div>
-        {shown.length > 1 && <Arrows strip={zoomed} count={shown.length} />}
+        {shown.length > 1 && (
+          <Arrows strip={zoomed} count={shown.length} behavior="instant" />
+        )}
       </dialog>
     </div>
   )
