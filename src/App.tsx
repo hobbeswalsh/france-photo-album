@@ -24,7 +24,9 @@ const page = (el: HTMLElement | null, dir: number) => {
     dir > 0
       ? edges.find((x) => x > el.scrollLeft + 1)
       : edges.filter((x) => x < el.scrollLeft - 1).pop()
-  if (to !== undefined) el.scrollTo({ left: to, behavior: 'smooth' })
+  // Not 'smooth': the browser scales that duration with the distance, so a wide
+  // slide took over half a second to arrive. A photo should land when you ask.
+  if (to !== undefined) el.scrollTo({ left: to, behavior: 'instant' })
 }
 
 // Only the scroll position decides which arrow shows, so `count` is enough to
