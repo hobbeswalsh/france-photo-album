@@ -82,7 +82,7 @@ figure {
    alone. */
 @keyframes peek {
   50% {
-    translate: -20px 0;
+    translate: -30px 0;
   }
 }
 
@@ -95,7 +95,8 @@ figure {
 .nudge > * {
   flex: 0 0 auto;
   scroll-snap-align: start;
-  animation: peek 0.5s ease-in-out 0.2s 1;
+  animation: peek 0.7s cubic-bezier(0.3, 0.05, 0.4, 1) 0.2s 1;
+  /* animation: peek 0.7s ease-in-out 0.2s 1; */
 }
 
 .nudge {
@@ -107,7 +108,8 @@ figure {
    anything, hence the viewport. It only bites on a narrow screen, where a
    landscape photo would otherwise be wider than the screen it is scrolling in.
    `contain` is what letterboxes it rather than stretching it when it does. */
-.nudge .zoom img {
+.nudge .zoom img,
+.nudge > video {
   height: 100%;
   width: auto;
   max-width: 88vw;
@@ -121,8 +123,12 @@ figure {
 }
 
 /* Lightbox photos fill their slide and letterbox, which is what keeps them from
-   cropping — a centered grid item sizes the track to the image and overflows. */
-.strip > img {
+   cropping — a centered grid item sizes the track to the image and overflows.
+   A lone video in the pane is the same shape of problem, so it shares the rule;
+   inside a stack it hugs its own width instead (see .nudge > video above), and
+   the :not() keeps this from undoing that. */
+.strip > img,
+.strip:not(.nudge) > video {
   display: block;
   width: 100%;
   height: 100%;

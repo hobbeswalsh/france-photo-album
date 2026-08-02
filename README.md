@@ -20,6 +20,12 @@ change is needed to add one. Names must stay zero-padded (`france-trip-07.webp`)
 sort that produces album order is lexicographic. Captions go in the `captions` map in
 `src/photos.ts`, keyed by filename.
 
+MP4s live in the same directory and work the same way, except they are named
+`france-vid-NN.mp4` — Photos restarts its numbering for a video-only export, so
+sharing the `france-trip-` prefix would collide with unrelated stills. A
+`<Pic name="france-vid-01">` plays in the pane with native controls (which is also
+where fullscreen comes from) rather than opening the lightbox.
+
 To convert a fresh Apple Photos export (JPEG, Maximum quality, **sRGB** profile):
 
 ```fish
