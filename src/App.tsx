@@ -34,6 +34,21 @@ const page = (
   if (to !== undefined) el.scrollTo({ left: to, behavior })
 }
 
+// Native controls bring their own fullscreen button, so a video needs no
+// lightbox of its own -- and controls nested inside the zoom <button> a photo
+// gets would not be clickable anyway. Nothing preloads but the metadata: the
+// clips are megabytes, and most visits never play one.
+const Video = ({ photo, label }: { photo: Photo; label: string }) => (
+  <video
+    src={photo.url}
+    aria-label={label}
+    controls
+    playsInline
+    preload="metadata"
+    onClick={(e) => e.stopPropagation()} // a click in the lightbox closes it
+  />
+)
+
 // Only the scroll position decides which arrow shows, so `count` is enough to
 // re-measure on a new selection.
 function Arrows({
@@ -60,8 +75,13 @@ function Arrows({
     el.addEventListener('scroll', measure, { passive: true })
     // The lightbox strip has no size until the dialog opens, so opening it —
     // like a window resize — changes the edges without a scroll ever firing.
+    // The slides are the other half of it: a photo has no width until it
+    // decodes and a video none until its metadata lands, both of them after
+    // this effect runs, so the first measure sees a strip that does not yet
+    // overflow and hides the arrows. Watching the slides catches them growing.
     const resize = new ResizeObserver(measure)
     resize.observe(el)
+    for (const slide of el.children) resize.observe(slide)
     return () => {
       el.removeEventListener('scroll', measure)
       resize.disconnect()
@@ -107,13 +127,17 @@ export default function App() {
 
   const shown = selected.photos.map((name) => byName[name]).filter(Boolean)
   const alt = (photo: Photo) =>
-    selected.label || photo.caption || 'Photo from the France trip'
+    selected.label ||
+    photo.caption ||
+    `${photo.video ? 'Video' : 'Photo'} from the France trip`
 
   // Arrow keys page whichever strip is on screen, from anywhere on the page.
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       const dir = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0
       if (!dir) return
+      // On a focused video the arrows are its own scrub controls.
+      if (e.target instanceof HTMLVideoElement) return
       e.preventDefault() // otherwise the arrows also scroll the page sideways
       const zoom = lightbox.current?.open
       page(
@@ -148,19 +172,27 @@ export default function App() {
             className={shown.length > 1 ? 'strip nudge' : 'strip'}
             ref={pane}
           >
-            {shown.map((photo, i) => (
-              // The label is in the key so a new selection always mounts fresh
-              // slides -- that is what replays the peek, even for a photo the
-              // last selection also showed.
-              <button
-                key={selected.label + photo.name}
-                type="button"
-                className="zoom"
-                onClick={() => open(i)}
-              >
-                <img src={photo.url} alt={alt(photo)} />
-              </button>
-            ))}
+            {/* The label is in the key so a new selection always mounts fresh
+                slides -- that is what replays the peek, even for a photo the
+                last selection also showed. */}
+            {shown.map((photo, i) =>
+              photo.video ? (
+                <Video
+                  key={selected.label + photo.name}
+                  photo={photo}
+                  label={alt(photo)}
+                />
+              ) : (
+                <button
+                  key={selected.label + photo.name}
+                  type="button"
+                  className="zoom"
+                  onClick={() => open(i)}
+                >
+                  <img src={photo.url} alt={alt(photo)} />
+                </button>
+              ),
+            )}
           </div>
         ) : (
           <p>Bonjour et bienvenue! 🥖</p>
@@ -177,9 +209,13 @@ export default function App() {
         onClick={(e) => e.currentTarget.close()}
       >
         <div className="strip" ref={zoomed}>
-          {shown.map((photo) => (
-            <img key={photo.name} src={photo.url} alt={alt(photo)} />
-          ))}
+          {shown.map((photo) =>
+            photo.video ? (
+              <Video key={photo.name} photo={photo} label={alt(photo)} />
+            ) : (
+              <img key={photo.name} src={photo.url} alt={alt(photo)} />
+            ),
+          )}
         </div>
         {shown.length > 1 && (
           <Arrows strip={zoomed} count={shown.length} behavior="instant" />

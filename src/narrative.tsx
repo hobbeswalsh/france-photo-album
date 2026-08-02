@@ -2,6 +2,7 @@ import { Pic } from './Pic'
 
 // The story. Ordinary prose, except that a <Pic> makes the phrase it wraps
 // clickable and swaps the photo below. `name` takes a list to open a carousel.
+// A `france-vid-NN` name is an mp4 and plays in the same pane, with controls.
 export const narrative = (
   <>
     <p>
@@ -71,7 +72,108 @@ export const narrative = (
       <Pic name={['france-trip-37', 'france-trip-38']}>
         didn't know what we were viewing
       </Pic>{' '}
-      exactly.
+      exactly. After some <Pic name="france-trip-42">climbing,</Pic>{' '}
+      <Pic name="france-trip-44">posing,</Pic> and{' '}
+      <Pic name="france-trip-47">exploring,</Pic> it was time for that most
+      hallowed of traditions:{' '}
+      <Pic name={['france-trip-48', 'france-trip-49', 'france-trip-50']}>
+        picnic and ice cream!
+      </Pic>
+    </p>
+    <p>
+      In the afternoon we went to see Robin's college roomate{' '}
+      <Pic name="france-trip-51">(shout out to Willy C, Zeïna, and Mila!)</Pic>.
+      They gave us the idea to take the <Pic name="france-trip-52">ferry</Pic>{' '}
+      across the river to <Pic name="france-trip-55">Honarribia in Spain</Pic>.
+      Apparently the way it's done there is to have one{' '}
+      <Pic name="france-trip-56">one giant dinner</Pic> followed immediately by{' '}
+      <Pic name="france-trip-58">another.</Pic> A{' '}
+      <Pic name={['france-trip-62', 'france-trip-61', 'france-trip-60']}>
+        late ferry back
+      </Pic>{' '}
+      to our <Pic name="france-trip-64">canvas home</Pic> was the only thing
+      left to do.
+    </p>
+    <p>
+      Alas, we needed to leave the Atlantic coast, but not before a stop at the
+      famous{' '}
+      <Pic name={['france-trip-67', 'france-trip-68', 'france-trip-69']}>
+        St-Jean-de-Luz market
+      </Pic>{' '}
+      and a{' '}
+      <Pic name={['france-trip-72', 'france-trip-73', 'france-trip-75']}>
+        cute mechanical train
+      </Pic>{' '}
+      that gave us a{' '}
+      <Pic
+        name={[
+          'france-trip-77',
+          'france-trip-78',
+          'france-trip-79',
+          'france-trip-80',
+        ]}
+      >
+        nice view
+      </Pic>{' '}
+      of our surroundings some time to{' '}
+      <Pic
+        name={[
+          'france-trip-82',
+          'france-trip-84',
+          'france-trip-86',
+          'france-trip-87',
+        ]}
+      >
+        pet horsies and build cairns
+      </Pic>
+      . We were headed to the <Pic name="france-trip-108">Pyrénées</Pic>. Our
+      lodging was a{' '}
+      <Pic name={['france-trip-88', 'france-trip-89', 'france-trip-91']}>
+        super-cute gite
+      </Pic>{' '}
+      that served us a home-made dinner as well as a local{' '}
+      <Pic name="france-trip-90">local cheese course</Pic>.
+    </p>
+    <p>
+      The only full day in the mountains was devoted to a{' '}
+      <Pic name="france-trip-97">hike to Lac D'Estom</Pic>, with{' '}
+      <Pic name="france-vid-01">ice-cold water to run into</Pic> along the way.
+      We'll let the pictures{' '}
+      <Pic
+        name={[
+          'france-trip-99',
+          'france-trip-100',
+          'france-trip-102',
+          'france-trip-103',
+          'france-trip-104',
+          'france-trip-105',
+          'france-trip-106',
+          'france-trip-107',
+          'france-trip-110',
+          'france-trip-116',
+          'france-trip-117',
+          'france-trip-119',
+          'france-trip-121',
+          'france-trip-122',
+          'france-trip-123',
+          'france-trip-125',
+          'france-trip-126',
+          'france-trip-127',
+          'france-trip-128',
+          'france-trip-132',
+          'france-trip-133',
+          'france-trip-134',
+          'france-trip-141',
+          'france-trip-143',
+          'france-trip-147',
+          'france-trip-149',
+          'france-trip-150',
+          'france-trip-152',
+        ]}
+      >
+        speak for themselves
+      </Pic>
+      .
     </p>
   </>
 )
