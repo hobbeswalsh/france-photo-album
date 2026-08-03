@@ -4,6 +4,7 @@ export type Selected = { photos: string[]; label: string }
 
 // A <Pic> sits deep inside the prose, nowhere near the pane that renders the
 // photos, so the setter travels by context instead of through every paragraph.
+// oxlint-disable-next-line react/only-export-components
 export const SelectPhotos = createContext<(selected: Selected) => void>(
   () => {},
 )
