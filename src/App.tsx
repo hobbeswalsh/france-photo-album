@@ -49,6 +49,16 @@ const Video = ({ photo, label }: { photo: Photo; label: string }) => (
   />
 )
 
+// A drawn chevron, not the ‹ › glyphs: those sit near the baseline of the line
+// box, so they show low in the round button by an amount that changes per font.
+function Chevron({ points }: { points: string }) {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <polyline points={points} />
+    </svg>
+  )
+}
+
 // Only the scroll position decides which arrow shows, so `count` is enough to
 // re-measure on a new selection.
 function Arrows({
@@ -102,7 +112,7 @@ function Arrows({
           aria-label="Previous photo"
           onClick={click(-1)}
         >
-          ‹
+          <Chevron points="15 5 8 12 15 19" />
         </button>
       )}
       {!atEnd && (
@@ -112,7 +122,7 @@ function Arrows({
           aria-label="Next photo"
           onClick={click(1)}
         >
-          ›
+          <Chevron points="9 5 16 12 9 19" />
         </button>
       )}
     </>
