@@ -30,7 +30,7 @@ export const narrative = (
     </p>
     <p>
       We finally arrived in Saint-Jean-de-Luz to 40ºC temperatures, so we headed
-      to <Pic name={['21', '22']}>the ocean</Pic>. A friend{' '}
+      to <Pic name={['22']}>the ocean</Pic>. A friend{' '}
       <Pic name={['23', '26', '27', '28']}>(Hi Nicole and Seb!)</Pic> met us for
       dinner in fabulous <Pic name="25">Guethary</Pic> and we had a great (if
       insect-infested) meal.
@@ -41,11 +41,12 @@ export const narrative = (
       <Pic name="29">surfboards and Acai bowls,</Pic>{' '}
       <Pic name="31">a nice beach,</Pic> and a trail for{' '}
       <Pic name="32">Robin to get lost on</Pic>. There was a cool promenade out
-      to a <Pic name={['33', '35', '39']}>viewpoint</Pic>, even if sometimes we{' '}
+      to a <Pic name={['35', '39']}>viewpoint</Pic>, even if sometimes we{' '}
       <Pic name={['37', '38']}>didn't know what we were viewing</Pic> exactly.
       After some <Pic name="42">climbing,</Pic> <Pic name="44">posing,</Pic> and{' '}
       <Pic name="47">exploring,</Pic> it was time for that most hallowed of
-      traditions: <Pic name={['48', '49', '50']}>picnic and ice cream!</Pic>
+      traditions: <Pic name="48">picnic</Pic> (and{' '}
+      <Pic name={['50']}>ice cream</Pic>).
     </p>
     <p>
       In the afternoon we went to see Robin's college roomate{' '}
@@ -60,7 +61,7 @@ export const narrative = (
     <p>
       Alas, we needed to leave the Atlantic coast, but not before a stop at the
       famous <Pic name={['67', '68', '69']}>St-Jean-de-Luz market</Pic> and a{' '}
-      <Pic name={['72', '73', '75']}>cute mechanical train</Pic> that gave us a{' '}
+      <Pic name={['72', '75']}>cute mechanical train</Pic> that gave us a{' '}
       <Pic name={['77', '78', '79', '80']}>nice view</Pic> of our surroundings
       some time to{' '}
       <Pic name={['82', '84', '86', '87']}>pet horsies and build cairns</Pic>.
@@ -112,13 +113,15 @@ export const narrative = (
       After a quick stop for <Pic name="155">saucisson</Pic> and{' '}
       <Pic name="156">cornichons</Pic>, we drove up a{' '}
       <Pic name="157">steep hill</Pic> to a{' '}
-      <Pic name={['158', '159']}>cute restaurant for dinner</Pic>.
+      <Pic name={['158']}>cute restaurant</Pic> for a wonderful{' '}
+      <Pic name="159"> meal</Pic>.
     </p>
     <p>
       Unfortunately, our time in the mountains came to an end. The upside of the
       long <Pic name="178">drive</Pic> to Carcassonne the next day was a few
       hours at an animal farm, which featured{' '}
-      <Pic name={['167', '169']}>goats</Pic>, <Pic name="171">rabbits</Pic>, and{' '}
+      <Pic name={['167', '169']}>pygmy goats</Pic>,{' '}
+      <Pic name="171">rabbits</Pic>, and{' '}
       <Pic name={['172', '173']}>guinea pigs</Pic>. Robin did some research and
       found a really cool goat cheese farm{' '}
       <Pic name={['177']}>WAY off the beaten path</Pic>. The only problem was
@@ -169,7 +172,8 @@ export const narrative = (
       <Pic name="237">change plans</Pic> and{' '}
       <Pic name="241">swim in the Mediterranean</Pic> instead. Maybe even do
       some <Pic name="239">cliff jumping</Pic>. Perhaps a trip into{' '}
-      <Pic name={['243', '244', '247']}>Cassis</Pic>.
+      <Pic name={['243', '244', '247']}>Cassis</Pic>. <em>Tant pis</em>, as they
+      say.
     </p>
     <p>
       Having dealt with this extreme adversity in Provence, we were{' '}
@@ -177,7 +181,9 @@ export const narrative = (
       <Pic name="252">ready enough, anyway</Pic>. Here is Robin{' '}
       <Pic name="251">pretending to understand</Pic> an SNCF employee. In spite
       of his best efforts to the contrary, we found the right plaform and
-      managed to <Pic name={['255', '256', '257']}>get on the train</Pic>.
+      managed to <Pic name={['255', '256']}>get on the train</Pic>. And yeah,
+      after seeing <Pic name={'257'}>this picture</Pic> from her phone, we're
+      all convinced that Diane cheats at spades.
     </p>
     <p>
       Through the crowded <Pic name="258">Gare de Lyon</Pic>,{' '}
@@ -219,7 +225,73 @@ export const narrative = (
     </p>
     <p>
       By this time, our days were getting predictable. Dear reader, I bet you
-      can even{' '}
+      can even guess that we started our next day with{' '}
+      <Pic name="317">pastries</Pic>, stolled past gorgeous architecture like
+      the <Pic name="319">Hôtel de Ville</Pic>, navigated streets both{' '}
+      <Pic name="321">wide</Pic> and <Pic name="320">narrow</Pic>, and ended up{' '}
+      <Pic name="322">focusing hard</Pic> on <Pic name="323">hot cocoa</Pic> for
+      a break. We discovered the{' '}
+      <Pic name={['325', '326', '327', '328']}>boat rentals</Pic> at the Jardins
+      de Luxembourg on our way to eat the{' '}
+      <Pic name={['333', '334']}>biggest meringue ever</Pic>. Our long
+      perambulations took us to the natural history museum, where we found
+      cetaceans <Pic name="337">small</Pic> and <Pic name="338">large</Pic>,{' '}
+      <Pic name="342">bears</Pic> and <Pic name="347">bugs</Pic> and{' '}
+      <Pic name="343">lions</Pic> and <Pic name="340">things</Pic>. Diane also
+      found Robin's <Pic name="345">döppelganger chicken</Pic>. We made the kids{' '}
+      <Pic name="349">pay</Pic> for our final afternoon adventure, which was a{' '}
+      <Pic name={['361', '359']}>boat tour of the Seine</Pic> (highly
+      recommended even if part of it was <Pic name="355">boring</Pic>). Of
+      course we followed up with a{' '}
+      <Pic name="362">Parisian nutritional staple</Pic>.
+    </p>
+
+    <p>
+      We were up with the sun the next day so we could{' '}
+      <Pic name="371">stand in line</Pic>, rush up a{' '}
+      <Pic name="372">spiral staircase</Pic>, and get a few moments alone in{' '}
+      <Pic name={['376', '374']}>Sainte Chapelle</Pic>. Admiring stained glass
+      left us positively <em>crevés</em>, but it was nothing a{' '}
+      <Pic name={'377'}>crêpe</Pic> couldn't fix. While Diane and I finished our
+      coffee, the kids <Pic name={['379', '378']}>studied hard</Pic> so they
+      could regale their parents with fart jokes. More walking led us to an
+      obligatory stop at <Pic name={'381'}>Mariage Frères tea shop</Pic> and
+      then past a <Pic name={['395', '382']}>fromagerie</Pic> for some lunch
+      nibbles. Afternoon took us to the <em>Porte de la Villette</em> park,
+      which was more concrete than anything else, but we found a place for the{' '}
+      <Pic name={'385'}>parents to chill</Pic> while the kids got{' '}
+      <Pic name={'386'}>trapped inside a red hexagon</Pic> and{' '}
+      <Pic name={['387', '388']}>barrelled down a giant dragon slide</Pic>.
+      After that... look, we're{' '}
+      <Pic name={'390'}>not proud of our food choices</Pic>, okay?
+    </p>
+    <p>
+      We dedicated our last day to the art of the flânerie. We were flâneurs.
+      Okay, in plain English: we walked a ton and ate even more. Fuel up with a
+      coffee at a <Pic name={'391'}>cute</Pic> shop, then taste-test{' '}
+      <Pic name={'392'}>pastries</Pic> (for science!) More{' '}
+      <Pic name={'397'}>cocoa</Pic> and <Pic name={'398'}>spades</Pic>. More{' '}
+      <Pic name={'400'}>patisseries</Pic> and the{' '}
+      <Pic name={'402'}>greatest</Pic> chausson aux pommes (for science!) A trip
+      to <Pic name={'405'}>G. Detou</Pic>, Robin's favorite{' '}
+      <Pic name={'404'}>cooking supply</Pic> shop. A walk through the{' '}
+      <Pic name={'410'}>Tuileries</Pic> to the{' '}
+      <Pic name={'411'}>olympic sculpture</Pic>. A few{' '}
+      <Pic name={'414'}>selfies</Pic>. <Pic name={'417'}>Up</Pic>,{' '}
+      <Pic name={'418'}>up</Pic>, and <Pic name={'416'}>away</Pic> at the Palais
+      Royal.
+    </p>
+    <p>
+      And then, suddenly, it was time for{' '}
+      <Pic name={'420'}>one last trip down the apartment elevator</Pic>, one
+      last chance for an <Pic name={'421'}>orangina</Pic> (and "le snacking"),
+      and one last ride on the enormous <Pic name={'422'}>conveyor belts</Pic>{' '}
+      at Charles de Gaulle airport.
+    </p>
+    <p>
+      Are we happy to be back in the glorious pacific northwest?{' '}
+      <Pic name="424">We are</Pic>. Do we miss our time in France?{' '}
+      <Pic name="425">Mais oui</Pic>.
     </p>
   </>
 )
