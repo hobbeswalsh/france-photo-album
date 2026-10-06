@@ -6,6 +6,10 @@ import { Pic, Vid } from './Pic'
 export const narrative = (
   <>
     <p>
+      This summer (July/August 2026) the Walsh family took a trip to France.
+      Here's a brief recap of the trip!
+    </p>
+    <p>
       Our trip started on the early side -- the VERY early side. We got to the
       airport 15 minutes before the ticket counter even opened, so we took the
       opportunity to ask a stranger to take our{' '}
